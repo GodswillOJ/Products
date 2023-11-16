@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4c4cf0b696.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/public/css/admin.css">
+    <link rel="stylesheet" href="/public/css/home_view.css">
+</head>
+<body>
+        <!-- <nav id="nav2" >
+            <div class="blog_logo">
+                <a href="/">View Blogs</a>
+            </div>
+                <div class="route">
+                <ul id="signin">
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+                </div>
+        </nav> --> 
+        <section id="menu" style="z-index: 1;">
+            <div class="logo">
+                <h4><a href="/admin/home">Ecommerce</a></h4> 
+            </div>
+            <div class="items">
+                <a id="nav_link" href="/admin/dashboard"><li><div class="menu_icon"><i class="fa-solid fa-chart-pie"></i><p id="post_menu">Dashboard</p></div></li></a>
+                <a id="nav_link" href="/admin/profile"><li><div class="menu_icon"><i class="fa-solid fa-circle-check"></i><p id="post_menu" href="#">Profile</p></div></li></a>
+                <li><div class="menu_icon"><i class="fa-solid fa-feather" style="font-style: normal; font-size: 16px;"></i> <p class="post_menu" style="color: rgb(102, 110, 14)">Post</p></div>
+                    <ul class='dropdown' id="drop_down_post">
+                        <a id="nav_link item_post" href="/admin/post"><li>Add New</li></a>
+                        <a href="/admin/all-post"><li>All Post</li></a>
+                        <a href="/admin/edit-category"><li>Category</li></a>
+                        <a href="#"><li>Tags</li></a>
+                    </ul>
+                </li>
+                <a id="nav_link" href="/admin/edit-admin/:id"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Edit</p></div></li></a>
+                <a id="nav_link" href="/admin/add"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Add</p></div></li></a>
+                <a id="nav_link" href="/admin/orders"><li><div class="menu_icon"><i class="fa-solid fa-list-ul"></i><p id="post_menu" href="#">Orders</p></div></li></a>
+                <a id="nav_link" href="/admin/inbox"><li><div class="menu_icon"><i class="fa-solid fa-envelope"></i><p id="post_menu" href="#">Inbox</p></div></li></a>
+                <a id="nav_link" href="/admin/users"><li><div class="menu_icon"><i class="fa-solid fa-envelope"></i><p id="post_menu" href="#">Users</p></div></li></a>
+                <a id="nav_link"href="#"><li><div class="menu_icon"><i class="fa-solid fa-gear"></i><p id="post_menu" href="#">Settings</p></div></li></a>
+                <a id="nav_link"href="/logout"><li><div class="menu_icon"> <i class="fa-solid fa-gear"></i><p id="post_menu" href="#">Logout</p></div></li></a>
+            </div>
+         </section>         
+         
+         <section id="interface" style="overflow: scroll;">
+            <input type="checkbox" id="toggle">
+            <div class="nav" style="z-index: 99;">
+                <!-- For search bar -->
+                <div class="n1">
+                    <!-- for icon -->
+                    <label class="nav-toggler" for="toggle">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </label>
+
+                                    <!-- For search bar -->
+                <div class="search_bar">
+                    <i class="fa-solid fa-magnifying-glass" id="view"></i>
+                    <i class="fa-sharp fa-solid fa-xmark" id="closeBtn"></i>
+                </div>
+                <input type="text" placeholder="New search here..." class="search_field">
+
+                </div>
+                <!--  For profile bar -->
+                <div class="profile">
+                    <i class="fa-solid fa-bell">
+
+                    </i>
+                    <img src="/Backend/public/images/bio.jpg" alt="">
+                </div>
+            </div>
+
+                <!-- <h3 class="i-name">
+                Dashboard
+              </h3> -->
+
+              <!-- Dashboard redo -->
+
+              <div id="back_home" class="col py-3">
+                <div class="row">
+                    <div class="col">
+                        <div aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item active"><a href="#">Add User</a></li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="col text-end fw-lighter">
+                        <b>UserId</b>
+                    </div>
+                </div>
+              </div>
+
+              <% if (typeof message !== 'undefined') { %>
+                <div class="user_msg" style="background-color: rgb(214, 249, 161); padding-left: 20px; margin: 0 10px 0 10px;">
+                    <%= message %>
+                 </div>
+                 <% } %>
+
+              <!-- users sec -->
+        <form id="add_form" action="/admin/add" method="POST" enctype="multipart/form-data">
+                <div class="row form-group mb-4">
+                    <div class="col">
+                        <label for="username">User Name</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="User Name" required>
+                    </div>
+
+                    <div class="col">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" id="username" name="firstname" placeholder="Last Name" required>
+                    </div>
+                    
+                    <div class="col">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
+                    </div>
+
+                </div>
+
+
+                <div class="row form-group mb-4">
+                    <div class="col">
+                        <label for="mno">Tel</label>
+                        <input type="text" class="form-control" id="tel" name="mno" placeholder="Telephone" required>
+                    </div>
+
+                    <div class="col">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password" required>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" placeholder="Email" name="email" required>
+                </div>
+
+                <!-- customer details  -->
+                <div class="col ">
+                    <p>details</p>
+                        <textarea class="form-contol" name="details" id="details" cols="30" rows="12"  placeholder="Customer details"></textarea>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="image">Upload Image</label>
+                    <input id="image" name="image" type="file">
+                        
+                </div>
+
+                <div class="form-group mb-4">
+                        <button type="submit" class="btn btn-primary">Add New</button>
+                </div>
+        </form>
+            
+
+            <footer id="more_info">
+                <div class="more_in">
+                    <ul>
+                        <li><a href=""><i class="fa-brands fa-square-instagram"></i></a></li>
+                        <li><a href=""><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href=""><i class="fa-brands fa-linkedin"></i></a></li>
+                    </ul>
+                    <p class="Us">Contact Us:  070367442231</p>
+                </div>
+            </footer>
+
+        
+         </section>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"></script>
+    <script src="/public/scripts/scripts.js"></script>
+    <script src="/public/scripts/admin.js"></script>
+</body>
+</html>

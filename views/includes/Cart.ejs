@@ -1,0 +1,8 @@
+<form action="/user/cart" method="Post">
+    <input type="hidden" value="<%= data.title %>" name="name">
+    <input type="hidden" value="<%= data.image %>" name="image">
+    <input type="hidden" value="<%= data._id %>" name="productId">
+    <input type="hidden" value="<%= data.price %>" name="price">
+    <input type="hidden" value="<%= data.quantity %>" name="quantity">
+    <button class="CartButton" style="background-color: rgb(71, 77, 75); color: white;">Add to Cart</button>
+</form>

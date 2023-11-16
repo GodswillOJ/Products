@@ -1,0 +1,241 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(228, 226, 225);
+    overflow-x: hidden;
+}
+.user_info.success input {
+    border-color: #09c372;
+}
+
+.user_info .error input {
+    border-color: #ff3860;
+}
+
+.user_info .error {
+    color: #ff3860;
+    font-size: 9px;
+    height: 13px;
+}
+nav{
+    position: relative;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    background-image: linear-gradient(60deg, rgb(25, 25, 11), rgb(18, 9, 13), rgb(21, 15, 8));
+    box-shadow: 10px 10px 10px rgb(0 0 0 / 0.2);
+}
+#nav2{
+    position: relative;
+    top: -4rem;
+    left: 0;
+    display: flex;
+    width: 213%;
+    justify-content: space-between;
+    height: 70px;
+    background-image: linear-gradient(60deg, rgb(25, 25, 11), rgb(18, 9, 13), rgb(21, 15, 8));
+}
+#pages{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+#features li{
+    position: relative;
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+    float: left;
+    right: 213%;
+}
+#signin li{
+    position: relative;
+    display: block;
+    justify-content: space-between;
+    text-decoration: none;
+    padding: 10px;
+    float: left;
+    right: 3rem;
+}
+#features li a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+#features li:active{
+    background-color: rgb(242, 93, 93);
+    height: 70px;
+    bottom: 11.5px;
+}
+#features li:hover{
+    position: relative;
+    background: rgb(29, 28, 28);
+    height: 36px;
+    padding-top: 15px;
+    bottom: 5px;
+    border: 0.05px solid rgb(132, 129, 129);
+}
+#signin li a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+#signin li:active{
+    background-color: rgb(242, 93, 93);
+    height: 70px;
+    bottom: 11.5px;
+}
+
+#signin li:hover{
+    position: relative;
+    background: rgb(29, 28, 28);
+    height: 36px;
+    padding-top: 15px;
+    bottom: 5px;
+    border: 0.05px solid rgb(132, 129, 129);
+}
+.blog_logo{
+    color: #fff;
+    padding: 20px 20px 0px;
+}
+.blog_logo a{
+    color: #fff;
+    text-decoration: none;
+}
+.hint{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    right: 3rem;
+    width: 22rem;
+    margin: 78px;
+    padding-top: 10px;
+}
+.hint a{
+    font-size: 18px;
+    color: rgb(33, 18, 18);
+}
+
+#container h4{
+    color: rgb(33, 18, 18);
+    font-size: 19px;
+    padding-right: 0px;
+}
+.user_info{
+    position: relative;
+    display: block;
+    margin: 20px 20px;
+}
+#form .user_info1{
+    position: relative;
+    margin: 0px;
+    width: 96.5%;
+    padding-left: 20px;
+}
+#form .user_info{
+    position: relative;
+    top: -18px;
+}
+label{
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(100, 18, 155);
+}
+.Firstname{
+    display: block;
+}
+.Lastname{
+    display: block;
+}
+.New_password{
+    display: block;
+}
+.email{
+    display: block;
+}
+.password{
+    display: block;
+    padding-top: 20px;
+}
+input{
+    width: 100%;
+    height: 30px; 
+    font-size: 16px;
+    border: none; 
+}
+input[type=text],[type=email],[type=username], [type=password]{
+    padding-left: 10px;
+    border-bottom: 0.5px solid rgb(225, 223, 221);
+}
+
+button{
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+}
+button:hover{
+    background-color:  rgb(196, 182, 204);
+}
+input[type='submit']{
+    position: relative;
+    font-size: 1.1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: rgb(164, 164, 223);
+    box-shadow: 0px -0px 7px 0px #130e0e;
+    width: 93%;
+    left: 20px;
+}
+input[type='submit']:hover{
+    position: relative;
+    background-color: #726b6b;
+    border-radius: 5px;
+    box-shadow: 0px -0px 7px 0px #beb7b7;
+}
+#alert{
+    position: relative;
+    left: 24rem;
+}
+.error{
+    display: block;
+    background-color: #726b6b;
+    padding: 10px;
+    display: none;
+}
+.error .display-error{
+    display: block;
+    margin-bottom: 20px;
+    transform: translateY(-20px);
+}
+.success{
+    margin-bottom: 30px;
+    color: green;
+    background-color: aquamarine;
+    padding: 10px;
+    display: none;
+}
+.success.display-success{
+    display: block;
+}
+.alert-dismissible .close{
+    position: relative;
+    left: 10%;
+    margin-top: -2%;
+    width: 2px; 
+}
+.alert-dismissible .close:hover{
+    position: relative; 
+    align-items: center;
+    padding-left: 1%;
+}
+#image {
+    position: relative;
+    background: none;
+    padding-bottom: 20px;
+}

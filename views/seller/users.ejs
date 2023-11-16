@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4c4cf0b696.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/public/css/admin.css">
+    <link rel="stylesheet" href="/public/css/home_view.css">
+</head>
+<body>
+        <!-- <nav id="nav2" >
+            <div class="blog_logo">
+                <a href="/">View Blogs</a>
+            </div>
+                <div class="route">
+                <ul id="signin">
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+                </div>
+        </nav> --> 
+        <section id="menu">
+            <div class="logo">
+                <h4><a href="/seller/home">Ecommerce</a></h4> 
+            </div>
+            <div class="items">
+                <a id="nav_link" href="/seller/dashboard"><li><i class="fa-solid fa-chart-pie"></i> Dashboard</li></a>
+                <a id="nav_link" href="/seller/profile"><li><i class="fa-solid fa-circle-check"></i>Profile</li></a>
+                <li><i class="fa-solid fa-feather" style="font-style: normal; font-size: 16px;"><Post id="post_menu" href="#">Post</a></i> 
+                    <ul class='dropdown' id="drop_down_post">
+                        <a id="nav_link item_post" href="/seller/post"><li>Add New</li></a>
+                        <a href="/seller/all-post"><li>All Post</li></a>
+                        <a href="/seller/users"><li>users</li></a>
+                        <a href="#"><li>Tags</li></a>
+                    </ul>
+                </li>
+                <a id="nav_link" href="/seller/edit-admin/:id"><li><i class="fa-solid fa-feather"></i>Edit</li></a>
+                <a id="nav_link" href="/seller/orders"><li><i class="fa-solid fa-list-ul"></i>Orders</li></a>
+                <a id="nav_link" href="/seller/inbox"><li><i class="fa-solid fa-envelope"></i>Inbox</li></a>
+                <a id="nav_link" href="/seller/users"><li><i class="fa-solid fa-envelope"></i>Users</li></a>
+                <a id="nav_link"href="#"><li><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a id="nav_link"href="/logout"><li><i class="fa-solid fa-gear"></i> Logout</li></a>
+            </div>
+         </section>
+         <section id="interface" style="overflow: scroll;">
+            <input type="checkbox" id="toggle">
+            <div class="nav">
+                <!-- For search bar -->
+                <div class="n1">
+                    <!-- for icon -->
+                    <label class="nav-toggler" for="toggle">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </label>
+
+                                    <!-- For search bar -->
+                <div class="search_bar">
+                    <i class="fa-solid fa-magnifying-glass" id="view"></i>
+                    <i class="fa-sharp fa-solid fa-xmark" id="closeBtn"></i>
+                </div>
+                <input type="text" placeholder="New search here..." class="search_field">
+
+                </div>
+                <!--  For profile bar -->
+                <div class="profile">
+                    <i class="fa-solid fa-bell">
+
+                    </i>
+                    <img src="/public/images/bio.jpg" alt="">
+                </div>
+            </div>
+            
+            
+            <div class="User_values">
+                <div class="user_info flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div><p class="user_name"><%= data.username %> </p></div>
+                    <div class="btn-toolbar mb-2 mb-md 0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                share
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                export
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col py-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="userNav" aria-label="breadcrumb">
+                                <ol>
+                                    <li class="breadcrumb-item"><a href="/seller/dashboard">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><%= data.username %></li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="col text-end fu-lighter" style="padding-top: 50px; padding-right: 30px;">
+                            <b>Last Updated</b>
+                        </div>
+                    </div>
+                </div>
+                
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="col" style="max-width: 140px;">
+                            <b>Name:</b>
+                        </div>
+                        <div class="col">
+                            <%= data.username  %>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="col" style="max-width: 140px;">
+                            <b>Email:</b>
+                        </div>
+                        <div class="col">
+                            <%= data.email  %>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="col" style="max-width: 140px;">
+                            <b>Telephone:</b>
+                        </div>
+                        <div class="col">
+                            <%= data.mno  %>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="col" style="max-width: 140px;">
+                            <b>Password:</b>
+                        </div>
+                        <div class="col">
+                            <%= data.password  %>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="col" style="max-width: 140px;">
+                            <b>Image:</b>
+                        </div>
+                        <div class="col">
+                            <img src="/public/images/<%= data.image  %>" style="width: 10%; height: 10%; " alt="">
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="col" style="max-width: 140px;">
+                            <b>Customer Details:</b>
+                        </div>
+                        <textarea class="col" style="width: 90%;"><%= data.details  %></textarea>
+                    </li>
+                </ul>
+            </div>
+            
+         </section>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"></script>
+    <script src="/public/scripts/scripts.js"></script>
+    <script src="/public/scripts/admin.js"></script>
+</body>
+</html>

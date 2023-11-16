@@ -1,0 +1,305 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+body {
+    width: 100% ;
+    position: relative;
+    display: flex;
+
+}
+
+#menu{
+    background-color: rgb(27, 21, 21); 
+    width: 30%;
+}
+#menu .logo{
+    position: fixed;
+    display: flex; 
+    width: 27.8%;
+    height: 60px;
+    align-items: center;
+    background-color: rgb(80, 78, 78);
+    color: aliceblue;
+    padding: 5px 0 0 10px;
+}
+
+#menu .logo h4 {
+    font-size: 20px;
+}
+
+#menu .logo img {
+    width: 40px;
+}
+#menu .items {
+    margin-top: 100px;
+}
+#menu .items li {
+    list-style: none;
+    padding: 15px 0 0 15px;
+    transition: 0.3s ease;
+}
+#menu .items li:hover{
+    background-color: black;
+    cursor: pointer;
+}
+
+/* li.active */
+#menu .items li.active:nth-child(1){
+    border-left: 4px solid whitesmoke;
+}
+#nav_link.active {
+    border-left: 4px solid whitesmoke; 
+}
+#menu .items li i {
+    color: rgb(217, 217, 196);
+    width: 30px;
+    height: 30px;
+    line-height: 30px; 
+    text-align: center;
+    font-size: 14px;
+    margin: 0 10px 0 25px;
+} 
+#menu .items li a {
+    text-decoration: none;
+    color: rgb(190, 190, 163);
+    font-weight: 300px;
+    transition: 0.3s ease;
+}
+#menu .items li:hover i,
+#menu .items li:hover a {
+    color: rgb(250, 250, 250);
+}
+
+/* The second section in dashboard */
+
+#interface{
+    width: calc(100% - 200px);
+    background-color: rgb(232, 228, 228);
+    /* to adjust the width of the profile sec */
+}
+#interface .nav{
+    width: calc(100% - 200px);
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(205, 184, 194);
+    padding: 15px 30px;
+    border-bottom: 3px solid blue;
+}
+
+#interface .nav .search i {
+    margin-right: 40px;
+}
+/* Search field */
+.searchField_user {
+    position: relative;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    left: 10px;
+}
+.searchField_user {
+    position: relative;
+    background: none;
+    border-bottom: 3px solid black;
+    width: 300px;
+    padding: 5px;
+}
+.search_user{
+    position: relative;
+    display: flex;
+    padding: 0 14px 14px 14px;
+    width: auto;
+    margin-left: 30px;
+}
+.searchField_user.active {
+    display: inline-block;
+    right: 0;
+    background: white;
+    border-bottom: none;
+}
+.nav .n1 {
+    position: relative;
+    display: flex;
+}
+/* Close Btn */
+#closeBtn_user {
+    visibility: hidden;
+}
+#closeBtn_user.active {
+    visibility: visible;
+    cursor: pointer;
+}
+#interface .nav .profile {
+    display: flex;
+    padding-right: 40px;
+    justify-content: flex-start;
+    align-items: center;
+}
+#interface .nav .profile i {
+    margin-right: 20px;
+    font-size: 19px;
+    font-weight: 400;
+}
+#interface .nav .profile img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user_msg{
+    background-color: none;
+    color: rgb(10, 9, 9);
+    margin-top: 100px;
+}
+
+
+
+/* For  Hamburger */
+
+.nav-toggler{
+    display: none;
+    height: min-content;
+    cursor: pointer;
+    margin:  12px 80px 0 0;
+}
+
+@media(max-width: 769px) {
+    #menu{
+        position: fixed;
+        display: grid;
+        width: 100%;
+        height: 60%;
+        border-end-end-radius: 20px;
+        /* removng transform makes the menu dissapear */
+        /* transform: translateY(-100%); */
+        left: 200%;
+        z-index: 1;
+        /* z-index makes it fully occupy the width */
+        transition: .2s;
+    }
+    #menu.active{
+        margin-top: 5rem;
+        left: 0;
+        border-end-end-radius: 14px;
+        border-end-start-radius: 14px;
+        opacity: 0.9;
+    }
+    #menu .items li {
+        text-align: center;
+        padding: 20px 0 20px 0;
+    }
+    #menu .items li:hover {
+        text-align: center;
+        padding: 20px 0 20px 0;
+        background: rgb(10, 10, 6);
+    }
+    #menu .items li i {
+        display: none;  
+    } 
+    #menu .items li a:hover {
+        color: black;
+    }
+    #menu .logo{
+        display: none;
+    }
+    #interface{
+        position: relative;
+        width: 100%;
+        margin-left: 0px;
+        display: inline-block;
+    }
+    #interface .nav{
+        width: 100%;
+    }
+    .interface .nav .profile {
+        position: relative;
+        left: 10px;
+        margin-left: 30px ;
+    }
+    /* search */
+    .search_user{
+        position: relative;
+        display: flex;
+        padding: 0 14px 14px 14px;
+        width: auto;
+        margin-left: 30px;
+    }
+    .searchField_user {
+        padding: 15px;
+        height: 20px;
+    }
+    /* Nav */
+    .nav-toggler{
+        display: grid !important;
+    }
+    .values{
+        padding: 0px 30px 0  30px;
+        justify-content: flex-start;
+    }
+    .values .value_box{
+        line-height: 20px;
+        padding: 16px 20px;
+        margin: 10px 20px 10px 0;
+    }
+    .values .value_box div h3,
+    .values .value_box div span {
+        width: auto;
+    }
+    .board{
+        width: auto;
+        padding: 0;
+        overflow-x: auto;
+    }
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+}
+@media only screen and (min-width: 310px) and (max-width: 477px){
+    #interface .nav{
+        padding: 15px;
+    }
+    #interface .nav .search input {
+        width: 150px;
+    }
+    .i-name{
+        padding: 30px 15px 0 15px;
+    }
+    .values{
+        padding: 15px 15px 0 15px;
+    }
+    .values .value_box{
+        width: 100%;
+        margin: 8px 0;
+    }
+    .board{
+        margin: 30px 15px 30px 15px;
+    }
+}
+    /* For the navbar */
+input[type='checkbox']{
+    display: none;
+}
+input[type='checkbox']:checked + #menu {
+    transform: translateY(0)
+}
+.nav-toggler{
+    display: none;
+    height: min-content;
+    cursor: pointer;
+    margin:  12px 80px 0 0;
+}
+.nav-toggler .bar{
+    width: 40px;
+    height: 4px;
+    margin-bottom: 10px;
+    background: black;
+    border-radius: 10%;
+    transition: .4s;
+}
