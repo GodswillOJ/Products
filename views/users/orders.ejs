@@ -28,14 +28,20 @@
                 <h4><a href="/admin/home">Ecommerce</a></h4> 
             </div>
             <div class="items">
-                <a id="nav_link" href="/user/account"><li><div class="menu_icon"><i class="fa-solid fa-circle-check"></i><p id="post_menu" href="#">Profile</p></div></li></a>
-                <a id="nav_link" href="/user/orders"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Orders</p></div></li></a>
-                <a id="nav_link" href="/user/inbox"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Inbox</p></div></li></a>
-                <a id="nav_link" href="/user/pending"><li><div class="menu_icon"><i class="fa-solid fa-list-ul"></i><p id="post_menu" href="#">Pending</p></div></li></a>
-                <a id="nav_link" href="/user/saved"><li><div class="menu_icon"><i class="fa-solid fa-envelope"></i><p id="post_menu" href="#">Saved</p></div></li></a>
-                <a id="nav_link" href="/user/settings"><li><div class="menu_icon"><i class="fa-solid fa-envelope"></i><p id="post_menu" href="#">Settings</p></div></li></a>
-                <a id="nav_link" href="/user/edit/:id"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Edit</p></div></li></a>
-                <a id="nav_link"href="/logout"><li><div class="menu_icon"> <i class="fa-solid fa-gear"></i><p id="post_menu" href="#">Logout</p></div></li></a>
+                <a id="nav_link" href="/user/account"><li><div class="menu_icon"><i class="fa-solid fa-circle-check"></i><p id="post_menu" href="#">profile</p></div></li></a>
+                <a id="nav_link" href="/user/mycart"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">cart(
+                    <% if (typeof user.cart !== "undefined") { %>
+                        <%= user.cart.items.length %>
+                    <% } else { %>
+                     0
+                    <% } %>
+                )</p></div></li></a>
+                <a id="nav_link" href="/user/inbox"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">inbox</p></div></li></a>
+                <a id="nav_link" href='/user/all_orders'><li><div class="menu_icon"><i class="fa-solid fa-list-ul"></i><p id="post_menu" href="#">orders</p></div></li></a>
+                <a id="nav_link" href="/user/saved"><li><div class="menu_icon"><i class="fa-solid fa-envelope"></i><p id="post_menu" href="#">saved</p></div></li></a>
+                <a id="nav_link" href="/user/settings"><li><div class="menu_icon"><i class="fa-solid fa-envelope"></i><p id="post_menu" href="#">settings</p></div></li></a>
+                <a id="nav_link" href="/user/edit/:id"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">edit</p></div></li></a>
+                <a id="nav_link"href="/logout"><li><div class="menu_icon"> <i class="fa-solid fa-gear"></i><p id="post_menu" href="#">logout</p></div></li></a>
             </div>
          </section>
          <section id="interface" style="display: block; overflow: scroll;">
@@ -69,70 +75,101 @@
 
             <div class="order_container" style="position: relative; top: 7rem;">
                 <div class="order_sec">
-                    <div class="order_info" style="margin: 0 10px 0 10px; display: grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                    <form action="/user/ordered" method="post" class="order_info" style="margin: 0 10px 0 10px; display: grid; grid-template-columns: 1fr 1fr; gap:20px;">
                         <div class="info1">
-                            <div><h5>Shipping Details</h5></div>
-                        </div>
-
-                        <div class="info1">
-                            <div>
-                                <h5>Review Order Information</h5>
-                                <div class="table-responsive" style="margin: 0 1rem 0 1rem;">
-                                    <% if(cart.items.length == 0) {%>
-                                    <h2>No item found</h2>
-                                    <%} else { %>
-                        
-                                          <table class="table">
-                                            <thead>
-                                              <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Image</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Quantity</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% for(let i = 0; i < cart.items.length; i++) {
-                                                        let item = cart.items[i]
-                                                %>
-                                              <tr>
-                                                    <th scope="row"><%= i %></th>
-                                                    <td><%= item.name %></td>
-                                                    <td><%= item.image %></td>
-                                                    <td><%= item.price %></td>
-                                                    <td><%= item.quantity %></td>
-                                              </tr>
-                                              <% } %>
-                                              <tr>
-                                                <td>Total Price:</td>
-                                                <td colspan="3"><%= cart.totalPrice %></td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                        
-                                        <%
-                                        }
-                                        %>
-                                        <div class="promo_hold" style="background-color: rgb(200, 200, 197); display: flex;">
-                                            <input type="text" name="promo" style="width: 100%; margin: 2px 0 2px 2px;">
-                                            <label for="promo" style="width: 20%;">Apply</label>
-                                        </div>
-                                        <div class="comment_ordr">
-                                            <label>You can leave us a comment</label>
-                                            <textarea name="commentOrder" id="" cols="50" rows="1"></textarea>
-                                        </div>
-                                        <div class="checkBox_order">
-                                            <label for="checkOrder">Accept the terms and condition</label>
-                                            <input type="checkbox">
-                                        </div>
-                                        <div>
-                                            <input type="submit" value="submit">
-                                        </div>
+                                <div><h5>Shipping Details</h5></div>
+                                <div class="col _shipping">
+                                    <label for="shippingAddress1">Shipping address</label>
+                                    <input type="text" class="form-control"  name="shippingAddress1" placeholder="Please enter shipping address" required="">
                                 </div>
+            
+                                <div class="col _shipping">
+                                    <label for="shippingAddress2">Alternative shipping address</label>
+                                    <input type="text" class="form-control"  name="shippingAddress2" placeholder="Please enter an alternative address" required="">      
+                                </div>
+                                <div class="col _shipping">
+                                    <label for="city">Location</label>
+                                    <input type="text" class="form-control"  name="city" placeholder="city" required="">      
+                                </div>
+                                <div class="col _shipping">
+                                    <label for="zip">zip</label>
+                                    <input type="text" class="form-control"  name="zip" placeholder="location" required="">      
+                                </div>
+                                <div class="col _shipping">
+                                    <label for="country">Country</label>
+                                    <input type="text" class="form-control"  name="country" placeholder="country" required="">      
+                                </div>
+                                <div class="col _shipping">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control"  name="phone" placeholder="phone" required="">      
+                                </div>
+                        </div>
+                        <div class="info1">
+
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">title</th>
+                                            <th scope="col">price</th>
+                                            <th scope="col">quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <% for(let i = 0; i < cart.items.length; i++) { let item = cart.items[i] %>
+                                            <tr>
+                                                <td>
+                                                    <img src="/public/images/<%= item.image %>" alt="">
+                                                </td>
+                                                <td>
+                                                    <%= item.name %>
+                                                </td>
+                                                <td>
+                                                    <%= item.price %>
+                                                </td>
+                                                <td>
+                                                    <%= item.quantity %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+
+                                            <tr>
+                                                <td>shipping fee:</td>
+                                                <td colspan="4">5000</td>
+                                            </tr>
+                                            <% if (cart) { let total_grand = cart.totalPrice + parseInt(5000); %>
+                                                <tr>
+                                                    <td>total</td>
+                                                    <td colspan="4"> <%= total_grand %> </td>
+                                                </tr>
+                                            <% } %>
+                                                
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <input type="hidden" name="orderItem" value="<%= user._id %>">
+                            </div>
+                            <div>
+                                <h5>payment options</h5>
+                                    <div class="delivery"  style="display: flex; margin: 20px;">
+                                        <input type="checkbox" name="payment_delivery" style="display: inline-block">
+                                        <label for="payment_delivery">pay on delivery</label>
+                                    </div>
+                                    <div class="delivery" style="display: flex; margin: 20px;">
+                                        <input type="checkbox" name="payment_card" style="display: inline-block">
+                                        <label for="payment_card">pay with mastercard</label>
+                                    </div>
+                                    <div class="delivery" style="display: flex; margin: 20px;">
+                                        <input type="checkbox" name="payment_card1" style="display: inline-block">
+                                        <label for="payment_card1">pay with visa_card</label>
+                                    </div>
                             </div>
                         </div>
-                    </div>
+                        <input type="submit" class="btn btn-danger" style="width: 100%;">
+                    </form>
                 </div>
             </div>
 

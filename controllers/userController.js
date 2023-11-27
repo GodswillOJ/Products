@@ -345,7 +345,7 @@ const userProfile = async(req, res)=>{
         const id = req.session.user_id
         const user = await User.findOne({ _id: id })
 
-        res.render('users/account', { data: user })
+        res.render('users/account', { data: user, })
     } catch (error) {
         console.log(error.message)
     }
@@ -519,11 +519,52 @@ const orderLoad = async(req, res)=> {
 }
 
 //  create order
+const {Order} = require('../models/orderSchema')
 const orderItem = async(req, res) => {
     try {
         console.log(req.body)
-        order = new orderItem({
 
+        const user = await User.findOne({_id: req.session.user_id})
+        const user_details = user.cart;
+        console.log(user_details)
+        const order = new Order({
+            orderItem: req.body.orderItem,
+            shippingAddress1:req.body.shippingAddress1,
+            shippingAddress2: req.body.shippingAddress2,
+            orderDetails: user_details,
+            city: req.body.city,
+            zip: req.body.zip,
+            country: req.body.country,
+            phone: req.body.phone,
+            status : 'pending'
+        })
+       const productOrdered = await order.save()
+
+       if(productOrdered){
+            if(user_details) {
+                user_details.items.splice(0)            
+                console.log(user_details.items)
+                user_details.totalPrice = user_details.totalPrice * 0 
+            }
+            await user.save()
+       }
+        
+        res.redirect('/user/mycart')
+    } catch (error) {
+        console.log(error)
+    }
+}
+const all_orders = async(req, res) => {
+    try {
+        const user = await User.findOne({_id: req.session.user_id})
+        const user_order = await Order.findOne({orderItem: req.session.user_id})
+        const details = user_order.orderDetails;
+        console.log(details)
+        
+        res.render('users/all_orders', {
+            user,
+            user_order,
+            details
         })
     } catch (error) {
         console.log(error)
@@ -532,6 +573,7 @@ const orderItem = async(req, res) => {
 
 
 module.exports = {
+    all_orders,
     orderLoad,
     orderItem,
     loadRegister,

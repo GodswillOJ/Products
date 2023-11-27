@@ -41,23 +41,23 @@
                     <div class="search_icon">
                         <ul>
                             <li class="offers"><i class="fa-solid fa-user"></i>
-                                <a id="nav_link" href="#">Account</a>
+                                <a id="nav_link" href="#">account</a>
                                 <ul class='dropdown'>
-                                    <li><a href="/user/login">Sign In</a></li>
-                                    <li><a href="/user/register">Register</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">What's New</a></li>
+                                    <li><a href="/user/login">sign in</a></li>
+                                    <li><a href="/user/register">register</a></li>
+                                    <li><a href="#">about</a></li>
+                                    <li><a href="#">what's new</a></li>
                                 </ul>
                             </li>
                             <li class="offers"><i class="fa-solid fa-circle-info"></i></i> <a id="nav_link" href="#">Q/E</a></li>
-                            <li class="offers"><i class="fa-solid fa-cart-shopping"></i><a id="nav_link" href="#">Orders</a></li>                
+                            <li class="offers"><i class="fa-solid fa-cart-shopping"></i><a id="nav_link" href="#">orders</a></li>                
                             <li class="_more" style="display: none;"><i class="fa-solid fa-angle-down"></i>
                             <a href="#">More</a>
                             <ul class='dropdown'>
-                                <li><a href="/user/login">Sign In</a></li>
-                                <li><a href="/user/register">Register</a></li>
+                                <li><a href="/user/login">sign in</a></li>
+                                <li><a href="/user/register">register</a></li>
                                 <li><a href="#">Q/E</a></li>
-                                <li><a href="#">Notification</a></li>
+                                <li><a href="#">notification</a></li>
                             </ul>
                             </li>
                         </ul>
@@ -153,11 +153,15 @@
                     </tbody>
                   </table>
 
-                    <div class="cart_exec" style="float: right;">
+                    <div class="cart_exec" style="float: right; display: flex;">
+                        <!-- view order-->
+                        <% if(cart.items.length) {let item = cart.items %>
+                            <a href="/user/ordered?id=<%= item.productId %>"><input type="submit" class="btn btn-primary form-control" value="buy"></a>
+                        <% } %>
+                        
+                        <!-- clear cart-->
                         <form action='/user/clear_cart/' method="post">
-                            <% for(let i = 0; i < cart.items.length; i++) {
-                                let item = cart.items[i]
-                             %>
+                            <% for(let i = 0; i < cart.items.length; i++) { let item = cart.items[i] %>
                                     <input type="hidden" name="productId" value="<%= item._id %>">
                             <% } %>
                             <button class="btn btn-danger" type="submit">Clear</button>

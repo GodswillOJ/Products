@@ -29,7 +29,13 @@
             </div>
             <div class="items">
                 <a id="nav_link" href="/user/account"><li><div class="menu_icon"><i class="fa-solid fa-circle-check"></i><p id="post_menu" href="#">Profile</p></div></li></a>
-                <a id="nav_link" href="/user/orders"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Orders</p></div></li></a>
+                <a id="nav_link" href="/user/mycart"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Cart(
+                    <% if (typeof cart !== "undefined") { %>
+                        <%= cart.items.length %>
+                    <% } else { %>
+                        0
+                    <% } %>
+                )</p></div></li></a>
                 <a id="nav_link" href="/user/inbox"><li><div class="menu_icon"><i class="fa-solid fa-feather"></i><p id="post_menu" href="#">Inbox</p></div></li></a>
                 <a id="nav_link" href="/user/pending"><li><div class="menu_icon"><i class="fa-solid fa-list-ul"></i><p id="post_menu" href="#">Pending</p></div></li></a>
                 <a id="nav_link" href="/user/saved"><li><div class="menu_icon"><i class="fa-solid fa-envelope"></i><p id="post_menu" href="#">Saved</p></div></li></a>

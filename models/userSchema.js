@@ -75,6 +75,9 @@ const userSchema = mongoose.Schema({
         },
       price: {
         type: Number,
+        },
+      image: {
+        type: String,
         }
       }]
     },
@@ -130,7 +133,8 @@ const userSchema = mongoose.Schema({
         const quantity = product.quantity;
         const image = product.image;
         const totalPrice = product.price;
-        
+
+        console.log(image)
 
         if (cart) {
             const itemIndex = cart.items.findIndex((p) => p.productId.toString() === product.productId);

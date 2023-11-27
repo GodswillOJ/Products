@@ -131,7 +131,10 @@ user_route.post('/user/delete-cart', authMiddleware.isLogin, cartController.dele
 user_route.post('/user/clear_cart/', authMiddleware.isLogin, cartController.clearCart)
 
 // user orders
-user_route.get('/user/orders', authMiddleware.isLogin, userController.orderLoad)
+user_route.get('/user/ordered', authMiddleware.isLogin, userController.orderLoad)
+user_route.post('/user/ordered', authMiddleware.isLogin, userController.orderItem)
+
+user_route.get('/user/all_orders', authMiddleware.isLogin, userController.all_orders)
 
 // user logout
 //logout

@@ -101,7 +101,15 @@ table, th, td {
 .info1 div h5{
     text-align: center;
 }
-
+._shipping{
+    margin: 10px 10px 0 10px;
+}
+.shipping_fee{
+    padding: 0 10px 0 10px;
+}
+.col_shipping{
+    width: 10rem;
+}
 
 
 @media (max-width: 760px) {
