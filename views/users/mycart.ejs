@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: auto;">
+<html lang="en" style="height: auto; overflow-x: hidden;">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,59 +15,67 @@
     <link rel="stylesheet" href="/public/css/cdn.jsdelivr.net_npm_swiper@10.1.0_swiper-bundle.min.css">
     <script src="https://kit.fontawesome.com/4c4cf0b696.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="height: 50rem;">
     <section class="home_v" >
 
     
      
         <!-- Nav -->
-        <nav id="nav_added">
+        <nav>
             <!-- For search bar -->
-            <div class="logo" id="logo_added"><a href="">Ecommerce</a></div>
-            <!-- <input type="text" placeholder="New search here..." class="search_field">
-            <div class="search_bar">
-                <i class="fa-solid fa-magnifying-glass" id="lens"></i>
-                <i class="fa-sharp fa-solid fa-xmark" id="closeBtn"></i>
-            </div> -->
-            <div class="n1">
+            <div class="logo"><a href="">Ecommerce</a></div>
+
+            <div class="n1 ham_nav">
                 <!-- for icon -->
-                <label class="nav-toggler" id="nav_tgle" for="toggle">
+                <label class="nav-toggler menu-toggle" id="mobile-menu" for="toggle">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
                 </label>
-    
                 <div class="search_">
                     <div class="search_icon">
                         <ul>
                             <li class="offers"><i class="fa-solid fa-user"></i>
-                                <a id="nav_link" href="#">account</a>
+                                <a id="nav_link" href="#">Account</a>
                                 <ul class='dropdown'>
-                                    <li><a href="/user/login">sign in</a></li>
-                                    <li><a href="/user/register">register</a></li>
-                                    <li><a href="#">about</a></li>
-                                    <li><a href="#">what's new</a></li>
+                                    <a href="/user/account"><li>Profile </li></a>
+                                    <a href='/user/mycart'><li> Cart(
+                                            <% if (typeof cart !== "undefined") { %>
+                                                <%= cart.items.length %>
+                                            <% } else { %>
+                                                0
+                                            <% } %>
+                                        )</li></a>
+                                    <a href="#"><li>About</li></a>
+                                    <a href="#"><li>What's New</li></a>
                                 </ul>
                             </li>
                             <li class="offers"><i class="fa-solid fa-circle-info"></i></i> <a id="nav_link" href="#">Q/E</a></li>
-                            <li class="offers"><i class="fa-solid fa-cart-shopping"></i><a id="nav_link" href="#">orders</a></li>                
-                            <li class="_more" style="display: none;"><i class="fa-solid fa-angle-down"></i>
-                            <a href="#">More</a>
-                            <ul class='dropdown'>
-                                <li><a href="/user/login">sign in</a></li>
-                                <li><a href="/user/register">register</a></li>
-                                <li><a href="#">Q/E</a></li>
-                                <li><a href="#">notification</a></li>
-                            </ul>
-                            </li>
+                            <li class="offers"><i class="fa-solid fa-cart-shopping"></i><a id="nav_link" href="#">Orders</a></li>                
+                            
+
                         </ul>
                     </div>
+                </div>
+                <div class="MyNav">
+                    <ul>
+                        <a href="/user/account"><li>Profile </li></a>
+                        <a href='/user/mycart'><li> Cart(
+                                <% if (typeof cart !== "undefined") { %>
+                                    <%= cart.items.length %>
+                                <% } else { %>
+                                    0
+                                <% } %>
+                            )</li></a>
+                        <a href="#"><li>About</li></a>
+                        <a href="#"><li>What's New</li></a>
+                    </ul>
                 </div>
             </div>
             <!--  For profile bar -->
         </nav>
         <!-- for swiper -->
-        <div class="highlights" style="display: flex;">
+        <div class="highlights">
             <div class="New"><h6>What's New</h6></div>
              <!-- Slider main container -->
             <di class="new_trends swiper">
@@ -196,5 +204,6 @@
     <script src="script/home.js"></script>
     <script src="/public/scripts/home_script.js"></script>
     <script src="/public/scripts/more.js"></script>
+    <script src="/public/scripts/home_harm.js"></script>
 </body>
 </html>

@@ -519,53 +519,12 @@ const deleteUser = async(req, res)=>{
 const Purchase = require('../models/purchasedSchema');
 const Category = require('../models/category');
 
-const { request } = require('../routes/adminRoute');
+// const { request } = require('../routes/adminRoute');
 
 
-const loadPost = async(req, res)=> {
-    try {
+//calling post route
 
-        const categories = await Category.find()
-        res.render('admin/add-post', {
-            categories
-        })
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-const insertPost = async(req, res) => {
-    const image = req.file.filename
-
-    try {
-        const post = new Post({
-            title: req.body.title,
-            details: req.body.details,
-            category: req.body.category,
-            countInStock: req.body.countInStock,
-            price: req.body.price,
-            richDescription:  req.body.richDescription,
-            image: image
-        })
-
-        const postData = await post.save();
-
-        if(postData){
-            const categories = await Category.find()
-
-            console.log(postData)
-            res.render('admin/add-post', {
-                categories,
-                message: 'Post successfully added..'
-            })
-        } else{
-            res.render('admin/postData', {message: 'Post not successful..'})
-        }
-    } catch (error) {
-        console.log(error.message)
-    }
-}
-
+const Post = require('../models/postSchema')
 const loadHomePost = async(req, res)=> {
     try {
 
@@ -648,18 +607,6 @@ const postCategory = async(req, res)=> {
 }
 
 // user_commodities
-const loadAdminHomePost = async(req, res)=> {
-    try {
-        const data = await Post.find().populate({path:'category', select:['name']})
-        console.log('user:', req.user)
-        res.render('user/home', {
-            data
-        })
-        
-    } catch (error) {
-        console.log(error.message)
-    }
-}
 const loadAdminCommodityPost = async(req, res)=> {
     try {
         const data = await Post.find().populate({path:'category', select:['name']})
@@ -698,16 +645,78 @@ const loadAdminServicesPost = async(req, res)=> {
 }
 
 
+const Messages = require('../models/messages')
 
+const loadMessage = async(req, res) => {
+    try {
+        res.render('admin/add-message')
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const newMessage = async(req, res) => {
+    try {
+        const sender = req.body.sender;
+        console.log(req.body)
+
+        // Check if the sender is an admin
+        const isAdmin = sender === 'admin';
+        if (isAdmin) {
+            // Example: If you have an authentication system, retrieve the adminId from the token or session
+            // adminId = req.user.adminId;
+            // For simplicity, you might hardcode the adminId in a real application
+
+            // Example: Hardcoding adminId (replace with actual adminId in your case)
+            const id = req.session.user_id;
+            const admin = await User.findById({_id: id})
+            const adminId = admin._id
+
+            const message = new Messages({ 
+                 sender: req.body.sender,
+                 title: req.body.title,
+                 receiver: req.body.receiver, 
+                 content: req.body.content, 
+                 adminId: adminId
+                
+            });
+            await message.save();
+
+            // Set isRead to true for messages sent by admin
+            if (isAdmin) {
+                message.isRead = true;
+            }
+            await message.save();
+            console.log(message)
+            res.render('admin/add-message', { message: 'message sent successfully' })
+        }
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+// const markAsRead = async(req, res) => {
+//     try {
+//         const _id = req.params.id;
+//         const message = await Messages.findByIdAndUpdate(_id, { isRead: true }, { new: true });
+//         res.json(message);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// }
 
 module.exports = {
+    newMessage,
+    // markAsRead,
     LoadRegister,
     insertAdmin,
     adminLoginLoad,
     verifyLogin,
     LoadHome,
     loadAdminCommodityPost,
-    loadAdminHomePost,
     loadAdminElectronicsPost,
     loadAdminServicesPost,
     loadDashboard,
@@ -725,8 +734,7 @@ module.exports = {
     addLoad,
     saved,
     deleteUser,
-    loadPost,
-    insertPost,
+    loadMessage,
     loadHomePost,
     loadAllPost,
     viewAdded,

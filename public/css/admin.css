@@ -8,11 +8,11 @@ html{
     scroll-behavior: smooth;
     overflow : scroll;
     height: 200px;
-
 }
 body {
     position: relative;
     display: flex;
+    box-sizing: border-box;
 }
 #menu{
     background-color: rgb(27, 21, 21); 
@@ -334,6 +334,7 @@ tbody tr td{
         border-end-start-radius: 14px;
         opacity: 0.9;
         margin-left: 10px;
+        height: 0;
     }
     #menu.active a{
         right: -10rem;
@@ -370,6 +371,7 @@ tbody tr td{
     }
     .n1{
         width: 60%;
+        height: 0;
     }
     .nav-toggler{
         display: grid !important;
@@ -413,7 +415,28 @@ tbody tr td{
 
 }  */
 
-@media screen and (max-width: 550px){
+
+/* post data */
+#add_form{
+    padding: 0 5% 0 5%;
+}
+
+.post_data{
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 60px;
+}
+
+@media screen and (max-width: 590px){
+    #add_form{
+        padding: 0 10% 0 10%;
+        
+    }
+    .post_data{
+        display: grid; 
+        grid-template-columns: 1fr; 
+        gap: 30px;
+    }
     #menu .logo{
         display: none;
     }
@@ -428,7 +451,7 @@ tbody tr td{
         line-height: 2px;
     }
     #interface{
-        margin: 8px 0;
+        /* margin: 8px 0; */
         height: 100%;
     }
     #interface .nav{
@@ -466,6 +489,8 @@ tbody tr td{
     }
 }
 @media(max-width: 477px){
+    
+    
     #interface .nav{
         margin-top: -0.5rem;
         padding: 0;
@@ -476,7 +501,8 @@ tbody tr td{
     #menu .items { 
         list-style: none;
         margin-left: 0.4rem;
-        width: 8rem;
+        width: 10rem;
+        height: 0;
     }
     .values{
         grid-template-columns: 1fr;
@@ -591,19 +617,16 @@ ol li {
 
 
 /* Add form */
-    .log_form{
-        position: relative;
-        width: 50%;
-        margin-left: 25%;
-        padding: 0 40px 0 40px;
-    }
+.log_form{
+    position: relative;
+    width: 100%;
+    padding: 0 30% 0 30%;
+}
 
-#add_form{
-    padding: 0 40px 0 40px;
-}
-.col{
+
+/* .col{
     align-items: center;
-}
+} */
 
 #col_name, #col_pass{
     padding-bottom: 9px;

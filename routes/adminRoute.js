@@ -128,8 +128,8 @@ admin_route.post('/admin/edit-category', adminAuth.isAdminLogin, adminController
 
 
 // admin Post
-admin_route.get('/admin/post', adminAuth.isAdminLogin, adminController.loadPost)
-admin_route.post('/admin/post', upload.single('image'), adminController.insertPost)
+admin_route.get('/admin/add-message', adminAuth.isAdminLogin, adminController.loadMessage)
+admin_route.post('/admin/add-message', upload.single('image'), adminController.newMessage)
 
 admin_route.get('/admin/all-post/', adminAuth.isAdminLogin, adminController.loadAllPost)
 
@@ -137,7 +137,6 @@ admin_route.get('/all-post/view-added/', adminController.viewAdded)
 
 
 // for user_commodity
-admin_route.get('/admin/home', adminController.loadAdminHomePost);
 admin_route.get('/admin/commodity', adminController.loadAdminCommodityPost);
 admin_route.get('/admin/electronics', adminController.loadAdminElectronicsPost);
 admin_route.get('/admin/services', adminController.loadAdminServicesPost);

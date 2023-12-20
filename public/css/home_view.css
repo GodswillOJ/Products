@@ -247,7 +247,6 @@ nav .logo a {
     }
     nav {
         position: relative;
-        height: 40px;
         padding-top: 0;
     }
     .profile {
@@ -352,12 +351,80 @@ nav .logo a {
     }
 }
 
+/* hom_ham */
+    .MyNav {
+        position: relative;
+        display: none;
+        z-index: 1;
+    }
+
+    .MyNav ul {
+        list-style: none;
+        margin: 0;
+        display: flex;
+    }
+
+    .MyNav li {
+        margin-right: 20px;
+    }
+
+    .MyNav a {
+        text-decoration: none;
+        color: rgb(194, 139, 139);
+        font-weight: bold;
+    }
+
+    .menu-toggle {
+        cursor: pointer;
+        display: none;
+    }
+
 @media (max-width: 690px) {
     nav .logo {
         position: relative;
-        display: none;
-
+        /* display: block; */
+        padding-top: 0;
+        margin-top: 0;
     }
+    nav{
+        padding-top: 0;
+        margin-top: 0;
+    }
+    /* for home_nav ham */
+    .MyNav {
+        display: none;
+        position: relative;
+        top: 110px;
+        right: 12rem;
+        z-index: 99;
+    }
+
+    .MyNav ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .MyNav li {
+        width: 200%;
+        padding: 10px;
+    }
+    .MyNav li{
+        background-color: black;
+        color: rgb(186, 166, 113);
+    }
+    .MyNav li:hover{
+        background-color: rgb(87, 86, 86);
+    }
+
+    /* hamburger show */
+    .MyNav.show {
+        display: block;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
 }
 
 
@@ -383,18 +450,22 @@ nav .logo a {
 
 /* FOOTER */
 .more_in{
-    background-color: rgb(45, 38, 38);
-    position: relative;
+    background-color: black;
+    position: absolute;
     display: flex;
-    justify-content: space-between;
-    color: azure;
-    padding: 20px;
+    width: 100%;
+    justify-content: center;
+    bottom: 0;
+    color: rgb(50, 43, 171);
 }
 .more_in .fa-brands {
     color: rgb(223, 66, 66);
 }
 .more_in p {
-    padding-right: 30px;
+    padding-left: 30px;
+}
+.more_in ul{
+    padding-left: 0;
 }
 .more_in ul li {
     display: inline-block;

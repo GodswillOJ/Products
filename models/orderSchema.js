@@ -57,20 +57,29 @@ const orderSchema = new Schema({
       },
     status: {
       type: String,
-      enum: ['pending', 'completed', 'cancelled'],
+      enum: ['pending', 'processed', 'shipped', 'delivered'],
       default: 'pending',
     },
+    history: [
+      {
+          status: {
+              type: String,
+              enum: ['pending', 'processed', 'shipped', 'delivered'],
+          },
+          timestamp: {
+              type: Date,
+              default: Date.now,
+          },
+      },
+    ],
     dateOrdered: {
        type: Date,
        default: Date.now(),
       } 
 });
 
-
-
 const Order = mongoose.model('Order', orderSchema);
 
-
 module.exports = {
-  Order,
+  Order
 }

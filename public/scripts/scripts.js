@@ -9,4 +9,5 @@ hamburger.addEventListener('click', () => {
 document.querySelectorAll('#nav_link').forEach( n => n.addEventListener('click', () => {
         hamburger.classList.remove('active')
         menuNav.classList.remove('active')
-    }))
+}))
+

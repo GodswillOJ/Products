@@ -25,6 +25,8 @@ const insertUser = async(req, res) => {
     const hashPassword = await bcrypt.hash(req.body.password, salt)
     const image = req.file.filename
 
+    const my_order = await Order.find().populate({path:'orderItem'})
+
     try {
         const user = new User({
             username: req.body.username,
@@ -34,6 +36,7 @@ const insertUser = async(req, res) => {
             mno: req.body.mno,
             details: req.body.details,
             password: hashPassword,
+            orders: my_order,
             image: image,
             is_admin:0
         })
@@ -502,13 +505,14 @@ const sellerLoadProfile = async(req, res)=>{
 }
 
 //post 
-
+// const { request } = require('../routes/adminRoute');
 
 // Orders information
 const orderLoad = async(req, res)=> {
     try {
         const user = await User.findOne({_id: req.session.user_id})
         const cart = user.cart
+        console.log(user)
         res.render('users/orders', {
             cart,
             user
@@ -519,48 +523,176 @@ const orderLoad = async(req, res)=> {
 }
 
 //  create order
+function generateOrderNumber() {
+    const prefix = 'ORD';
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substr(2,5);
+
+    return `${prefix}-${timestamp}-${random}`;
+}
+
+// confirmation mail
+const sendOrderConfirmationEmail = async(email, orderNumber)=> {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            requireTLS: true,
+            auth: {
+                user: emailUser,
+                pass: emailPassword
+            }
+        });
+
+        const mailOptions = {
+            from: emailUser,
+            to: email,
+            subject: 'Order Confirmation',
+            html: `<p>Your order with order number ${orderNumber} has been processed. Thank you for shopping with us!</p>`
+        }
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error)
+            } else {
+                console.log('Email has been sent:-', info.response)
+            }
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
 const {Order} = require('../models/orderSchema')
+
 const orderItem = async(req, res) => {
     try {
-        console.log(req.body)
 
+        const order = await Order.findOne({orderItem: req.body.orderItem}).exec()
+        console.log(order)
+        console.log(req.body.orderItem)
         const user = await User.findOne({_id: req.session.user_id})
         const user_details = user.cart;
         console.log(user_details)
-        const order = new Order({
-            orderItem: req.body.orderItem,
-            shippingAddress1:req.body.shippingAddress1,
-            shippingAddress2: req.body.shippingAddress2,
-            orderDetails: user_details,
-            city: req.body.city,
-            zip: req.body.zip,
-            country: req.body.country,
-            phone: req.body.phone,
-            status : 'pending'
-        })
-       const productOrdered = await order.save()
 
-       if(productOrdered){
-            if(user_details) {
-                user_details.items.splice(0)            
-                console.log(user_details.items)
-                user_details.totalPrice = user_details.totalPrice * 0 
+         // Generate order number
+        const orderNumber = generateOrderNumber();
+        // call other detail
+        const name = user_details.items[0].name
+        const productId = user_details.items[0].productId
+        const quantity = user_details.items[0].quantity
+        const price = user_details.items[0].price
+        const image = user_details.items[0].image
+        console.log(quantity)
+
+        if(order){
+            // Check if the product already exists in the order
+            const itemIndex = order.orderDetails.items.find(product => product.productId.equals(productId));
+            if(itemIndex){
+                console.log(itemIndex)
+                if(itemIndex){
+                    order.orderDetails.totalPrice = order.orderDetails.totalPrice + parseInt(price),
+                    // Update an existing product in the products array
+                // Product already exists in the order, update quantity and price
+                        itemIndex.quantity += quantity;
+                        itemIndex.price += price;
+                } else {
+                    order.orderDetails.items.push({
+                        name,
+                        productId,
+                        quantity,
+                        price,
+                        image,
+                    })
+                    console.log(user_details.items)
+                    order.orderDetails.totalPrice += parseInt(price)
+                }
+                await order.save()
             }
-            await user.save()
-       }
-        
+
+            if(itemIndex){
+
+                    if(user_details) {
+                        user_details.items.splice(0)            
+                        console.log(user_details.items)
+                        user_details.totalPrice = user_details.totalPrice * 0 
+
+                        user.orders.push(order)
+                        
+                    }
+                    await user.save()
+            }
+            
+        } else{
+            console.log(req.body)
+            const order = new Order({
+                orderItem: req.body.orderItem,
+                shippingAddress1:req.body.shippingAddress1,
+                shippingAddress2: req.body.shippingAddress2,
+                orderDetails: user_details,
+                city: req.body.city,
+                zip: req.body.zip,
+                country: req.body.country,
+                phone: req.body.phone,
+                orderNumber: orderNumber,
+                status: 'pending'
+            })
+            const productOrdered = await order.save()
+
+            if(productOrdered){
+
+                if(user_details) {
+                    user_details.items.splice(0)            
+                    console.log(user_details.items)
+                    user_details.totalPrice = user_details.totalPrice * 0 
+
+                    user.orders.push(productOrdered)
+                    
+                }
+                await user.save()
+            }
+
+            try {
+                await sendOrderConfirmationEmail(user.email, orderNumber);
+             } catch (error) {
+                console.error('Error sending order confirmation email:', error);
+            }
+        }
+
+       const paymentData = {
+        intent: 'sale',
+        payer: {
+          payment_method: 'paypal',
+        },
+        redirect_urls: {
+          return_url: 'http://your-website.com/success',
+          cancel_url: 'http://your-website.com/cancel',
+        },
+        transactions: [
+          {
+            amount: {
+              total: user_details.totalPrice.toString(),
+              currency: 'USD', // Change currency as needed
+            },
+            description: 'Your order description',
+          },
+        ],
+      };
+       
         res.redirect('/user/mycart')
     } catch (error) {
         console.log(error)
     }
 }
+
 const all_orders = async(req, res) => {
     try {
+        const orderItem = req.session.user_id;
         const user = await User.findOne({_id: req.session.user_id})
-        const user_order = await Order.findOne({orderItem: req.session.user_id})
+        const user_order = await Order.find({orderItem: orderItem}).exec()
         const details = user_order.orderDetails;
         console.log(details)
-        
+        console.log(user_order)
         res.render('users/all_orders', {
             user,
             user_order,
@@ -571,8 +703,61 @@ const all_orders = async(req, res) => {
     }
 }
 
+    //   paypal.payment.create(paymentData, (error, payment) => {
+    //     if (error) {
+    //       console.error(error);
+    //       res.status(500).json({ error: 'Internal Server Error' });
+    //     } else {
+    //       // Redirect the user to PayPal for approval
+    //       res.redirect(payment.links[1].href);
+    //     }
+    //   });
+
+
+    const Messages = require('../models/messages')
+    const messageFetch = async(req, res) => {
+    
+        try {
+
+            const user = await User.findOne({_id: req.session.user_id})
+            
+            const messages = await Messages.find({})
+            
+            console.log(messages)
+            res.render('users/inbox', {
+                messages,
+                user
+            })
+        } catch (error) {
+            console.error(error);
+            res.send('Something went wrong')
+        }
+    
+    }
+
+    const MarkAsRead = async(req, res) => {
+      
+            const messageId = req.body.adminId;
+            await Messages.findByIdAndUpdate(messageId, { isRead: true });
+            res.send('OK');
+          
+    }
+// paypal-config
+const paypal = require('paypal-rest-sdk');
+
+client_id = process.env.client_id
+secret_pp = process.env.secret_pp
+
+paypal.configure({
+  mode: 'sandbox', // Change to 'live' for production
+  client_id: client_id,
+  client_secret: secret_pp,
+});
+
 
 module.exports = {
+    messageFetch,
+    MarkAsRead,
     all_orders,
     orderLoad,
     orderItem,

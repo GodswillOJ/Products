@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/public/css/cdn.jsdelivr.net_npm_swiper@10.1.0_swiper-bundle.min.css">
     <script src="https://kit.fontawesome.com/4c4cf0b696.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="padding: 0;">
     <section id="interface" style="width: 100%;">  
         <!-- Nav -->
 
@@ -22,9 +22,9 @@
             <!-- For search bar -->
             <div class="logo"><a href="">Ecommerce</a></div>
 
-            <div class="n1">
+            <div class="n1 ham_nav">
                 <!-- for icon -->
-                <label class="nav-toggler" for="toggle">
+                <label class="nav-toggler menu-toggle" id="mobile-menu" for="toggle">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -48,14 +48,22 @@
                         </ul>
                     </div>
                 </div>
+                <div class="MyNav">
+                    <ul>
+                        <a href="/user/login"><li>login</li></a>
+                        <a href="/user/Register"><li>register</li></a>
+                        <a href="#"><li>about</li></a>
+                        <a href="#"><li>what's New</li></a>
+                    </ul>
+                </div>
             </div>
             <!--  For profile bar -->
         </nav>
 
-        <div class="highlights" style="display: flex;">
+        <div class="highlights">
             <div class="New"><h6>What's New</h6></div>
              <!-- Slider main container -->
-            <di class="new_trends swiper">
+            <div class="new_trends swiper">
                 <!-- Additional required wrapper -->
                 <div id="swip_wrap" class="swiper-wrapper">
                   <!-- Slides -->
@@ -81,7 +89,7 @@
         </div>
         
         <!-- for site name -->
-        <div class="site_logo" style="display: flex; padding: 5px; justify-content: space-between; background: #edeef0;">
+        <div class="site_logo home_navs">
             <div class="sub_class_menu" style="display: flex;">
                 <a href="#"><li class="cat_nav" style="padding: 10px;">All</li></a>
                 <a href="/commodity"><li class="cat_nav" style="padding: 10px;">Commodities</li></a>
@@ -115,83 +123,114 @@
                         <a href="#">About</a>
                     </div>
                 </div>
+                <div class="single_cont">
+                    <div class="swip_commodity_wrap">
+                        <div class="single_swip swiper">
+                            <div class="single_swip_wrap swiper-wrapper">
+                            <% data.forEach(single_cat => { %>
+                                <div class="single_commodity swiper-slide" style="background-image: url('/public/images/<%= single_cat.image %>');">
+                                    <div class="single-data">
+                                        <h3><%= single_cat.title %></h3>
+                                        <a href="/all-post/view-added/?id=<%= single_cat._id %>"><input type="button" value="See More"></a>
+                                    </div>
+                                </div>
+                            <% }) %>
+                            </div>
+                                                       <!-- If we need navigation buttons -->
+                            
+                                                         <!-- Swiper arrows -->
+                                <div  class="swiper-button-next">
+                                <i id="swip_arrow" class="ri-arrow-right-s-line"></i>
+                                </div>
+    
+                                <div  class="swiper-button-prev">
+                                <i id="swip_arrow" class="ri-arrow-left-s-line"></i>
+                                </div>
+                            
+                        </div>
+                    </div>
+
+
+                    <div class="post_block3">
+                        <div class="post_content_wrap">
+                            <div class="cat_names"><h2>Commodities</h2></div>
+                            <div class="post_wrap">
+                                <% var data = data.slice(-2)
+                                    data.forEach(post_data => { %>
+                        
+                                    <% if (post_data.category.name === 'commodity' ) { %>
+                                   
+                                       <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>');">
+                                        
+                                           <div class="admin_post_des">    
+                                               <h4 class="post_title"><%= post_data.title%></h4>
+                                               <p><%= post_data.richDescription %></p>
+                                               <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
+                                           </div>
+                   
+                                       </div>
+                   
+                                        <% } 
+                                   %>
+        
+                                <% }) %>
+                            </div>
+                        </div>
+    
+                        
+                        <div class="post_content_wrap">
+                                <div class="cat_names"><h2>Services</h2></div>
+                                <div class="post_wrap">
+                                    <% data.forEach(post_data => { %>
+                            
+                                        <% if (post_data.category.name === 'Services' ) { %>
+                                       
+                                           <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>');">
+                   
+                                               <div class="admin_post_des">    
+                                                   <h4 class="post_title"><%= post_data.title%></h4>
+                                                   <p><%= post_data.richDescription %></p>
+                                                   <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
+                                               </div>
+                       
+                                           </div>
+                       
+                                            <% } 
+                                       %>
+            
+                                    <% }) %>
+                                </div>
+                        </div>
+                            
+                        <div class="post_content_wrap">
+                                <div class="cat_names"><h2>Electronics</h2></div>
+                                <div class="post_wrap">
+                                    <% data.forEach(post_data => { %>
+                            
+                                        <% if (post_data.category.name === 'electronics' ) {  %>
+                                        
+                                            <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>');">
+                    
+                                                <div class="admin_post_des">    
+                                                    <h4 class="post_title"><%= post_data.title%></h4>
+                                                    <p><%= post_data.richDescription %></p>
+                                                    <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
+                                                </div>
+                        
+                                            </div>
+                        
+                                            <% } 
+                                        %>
+    
+                                    <% }) %>
+                                </div>
+                        </div>
+         
+                        
+                    </div>
+
+
                 
-                <div class="post_block3" style="margin-top: 0;">
-                    <div class="post_content_wrap">
-                        <div class="cat_names"><h2>Commodities</h2></div>
-                        <div class="post_wrap">
-                            <% data.forEach(post_data => { %>
-                    
-                                <% if (post_data.category.name === 'commodity' ) { %>
-                               
-                                   <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>');">
-           
-                                       <div class="admin_post_des">    
-                                           <h4 class="post_title"><%= post_data.title%></h4>
-                                           <p><%= post_data.richDescription %></p>
-                                           <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
-                                       </div>
-               
-                                   </div>
-               
-                                    <% } 
-                               %>
-    
-                            <% }) %>
-                        </div>
-                    </div>
-
-
-                    <div class="post_content_wrap">
-                        <div class="cat_names"><h2>Services</h2></div>
-                        <div class="post_wrap">
-                            <% data.forEach(post_data => { %>
-                    
-                                <% if (post_data.category.name === 'Services' ) { %>
-                               
-                                   <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>');">
-           
-                                       <div class="admin_post_des">    
-                                           <h4 class="post_title"><%= post_data.title%></h4>
-                                           <p><%= post_data.richDescription %></p>
-                                           <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
-                                       </div>
-               
-                                   </div>
-               
-                                    <% } 
-                               %>
-    
-                            <% }) %>
-                        </div>
-                    </div>
-
-
-                    <div class="post_content_wrap">
-                        <div class="cat_names"><h2>Electronics</h2></div>
-                        <div class="post_wrap">
-                            <% data.forEach(post_data => { %>
-                    
-                                <% if (post_data.category.name === 'electronics' ) { %>
-                               
-                                   <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>'); background-position: center; background-size:cover; width: 100%; height: 100px; ">
-           
-                                       <div class="admin_post_des">    
-                                           <h4 class="post_title"><%= post_data.title%></h4>
-                                           <p><%= post_data.richDescription %></p>
-                                           <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
-                                       </div>
-               
-                                   </div>
-               
-                                    <% } 
-                               %>
-    
-                            <% }) %>
-                        </div>
-                    </div>
-
- 
                 </div>
                 <div class="post_block1" >
                     <h4 class="trends_post">Trending</h4>
@@ -207,10 +246,9 @@
                             </div>
                         </div>
                     <% }) %>
-
+    
                 </div>
             </div>
-
         </div>
 
             
@@ -237,8 +275,9 @@
 
     <script src="/public/scripts/cdn.jsdelivr.net_npm_swiper@10.1.0_swiper-bundle.min.js"></script>
     <script src="/public/scripts/more.js"></script>
-    <script src="script/home.js"></script>
+    <!-- <script src="script/home.js"></script> -->
     <script src="/public/scripts/home_script.js"></script>
-    <script src="/public/scripts/more.js"></script>
+    <script src="/public/scripts/scripts.js"></script>
+    <script src="/public/scripts/home_harm.js"></script>
 </body>
 </html>

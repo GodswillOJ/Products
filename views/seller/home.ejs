@@ -22,9 +22,9 @@
             <!-- For search bar -->
             <div class="logo"><a href="">Ecommerce</a></div>
 
-            <div class="n1">
+            <div class="n1 ham_nav">
                 <!-- for icon -->
-                <label class="nav-toggler" for="toggle">
+                <label class="nav-toggler menu-toggle" id="mobile-menu" for="toggle">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -49,11 +49,20 @@
                         </ul>
                     </div>
                 </div>
+                <div class="MyNav">
+                    <ul>
+                        <a href="/seller/dashboard"><li>Dashboard </li></a>
+                        <a href="/seller/post"><li>Post</li></a>
+                        <a href="/seller/profile"><li>Profile</li></a>
+                        <a href="#"><li>About</li></a>
+                        <a href="#"><li>What's New</li></a>
+                    </ul>
+                </div>
             </div>
             <!--  For profile bar -->
         </nav>
 
-        <div class="highlights" style="display: grid;">
+        <div class="highlights">
              <!-- Slider main container -->
              <div class="New"><h6>What's New</h6></div>
             <di class="new_trends swiper">
@@ -82,7 +91,7 @@
         </div>
         
         <!-- for site name -->
-        <div class="site_logo" style="display: flex; padding: 5px; justify-content: space-between; background: #edeef0;">
+        <div class="site_logo">
             <div class="sub_class_menu" style="display: flex;">
                 <a href="#"><li class="cat_nav" style="padding: 10px;">All</li></a>
                 <a href="/commodity"><li class="cat_nav" style="padding: 10px;">Commodities</li></a>
@@ -241,5 +250,6 @@
     <script src="script/home.js"></script>
     <script src="/public/scripts/home_script.js"></script>
     <script src="/public/scripts/more.js"></script>
+    <script src="/public/scripts/home_harm.js"></script>
 </body>
 </html>

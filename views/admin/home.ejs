@@ -8,34 +8,27 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="Frontend/css/cdn.jsdelivr.net_npm_swiper@10.1.0_swiper-bundle.min.css">
     <link rel="stylesheet" href="/public/css/home_view.css">
     <link rel="stylesheet" href="/public/css/added.css">
     <link rel="stylesheet" href="/public/css/admin.css">
+    <link rel="stylesheet" href="/public/css/cdn.jsdelivr.net_npm_swiper@10.1.0_swiper-bundle.min.css">
     <script src="https://kit.fontawesome.com/4c4cf0b696.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <section class="home_v">
-
-    
-     
+    <section id="interface" style="width: 100%;">  
         <!-- Nav -->
+
         <nav>
             <!-- For search bar -->
             <div class="logo"><a href="">Ecommerce</a></div>
-            <input type="text" placeholder="New search here..." class="search_field">
-            <div class="search_bar">
-                <i class="fa-solid fa-magnifying-glass" id="lens"></i>
-                <i class="fa-sharp fa-solid fa-xmark" id="closeBtn"></i>
-            </div>
-            <div class="n1">
+
+            <div class="n1 ham_nav">
                 <!-- for icon -->
-                <label class="nav-toggler" for="toggle">
+                <label class="nav-toggler menu-toggle" id="mobile-menu" for="toggle">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
                 </label>
-
                 <div class="search_">
                     <div class="search_icon">
                         <ul>
@@ -43,7 +36,8 @@
                                 <a id="nav_link" href="#">Account</a>
                                 <ul class='dropdown'>
                                     <a href="/admin/dashboard"><li>Dashboard </li></a>
-                                    <a href="/admin/post"><li>Post</li></a>
+                                    
+                                    <a href="/admin/profile"><li>Profile</li></a>
                                     <a href="#"><li>About</li></a>
                                     <a href="#"><li>What's New</li></a>
                                 </ul>
@@ -55,37 +49,54 @@
                         </ul>
                     </div>
                 </div>
+                <div class="MyNav">
+                    <ul>
+                        <a href="/admin/dashboard"><li>Dashboard </li></a>
+                        
+                        <a href="/admin/profile"><li>Profile</li></a>
+                        <a href="#"><li>About</li></a>
+                        <a href="#"><li>What's New</li></a>
+                    </ul>
+                </div>
             </div>
             <!--  For profile bar -->
         </nav>
-        <!-- for swiper -->
-        <div class="highlights">
-            <div class="New"><h6>What's New</h6></div>
-            <div class="New_slide" style="display: flex;">
 
-                <div class="swiper">
-                    <!-- swipper arrow -->
-                    <div class="swip">
-                        <div class="swiper-button-prev">
-                             <i class="ri-arrow-left-s-line"></i>
-                        </div>
-                        <div class="swiper-button-next">
+        <div class="highlights">
+             <!-- Slider main container -->
+             <div class="New"><h6>What's New</h6></div>
+            <di class="new_trends swiper">
+                <!-- Additional required wrapper -->
+                <div id="swip_wrap" class="swiper-wrapper">
+                  <!-- Slides -->
+                  <% data.forEach(data_titles => { %>
+                    <div  class="swiper-slide"><%= data_titles.title %></div>
+                  <% }) %>
+                </div>
+                <!-- If we need pagination -->
+                <!-- <div class="swiper-pagination"></div> -->
+              
+                <!-- If we need navigation buttons -->
+              <div id="swip_cont">
+                          <!-- Swiper arrows -->
+                        <div id="swip" class="swiper-button-next">
                             <i class="ri-arrow-right-s-line"></i>
                         </div>
-                    </div>
-                </div>
 
-               <p class="new_info"> Lorem ipsum dolor sit amet, consectetur. </p>
-            </div>
+                        <div id="swip1" class="swiper-button-prev">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </div>
+                </div>
+            </div>       
         </div>
+        
         <!-- for site name -->
-        <div class="site_logo" style="display: flex; padding: 5px; justify-content: space-between; background: #edeef0;">
+        <div class="site_logo">
             <div class="sub_class_menu" style="display: flex;">
-                <a href=""><li class="cat_nav" style="padding: 10px;">All</li></a>
-                <a href=""><li class="cat_nav" style="padding: 10px;">Category</li></a>
-                <a href=""><li class="cat_nav" style="padding: 10px;">Commodities</li></a>
-                <a href=""><li class="cat_nav" style="padding: 10px;">Electronics</li></a>
-                <a href=""><li class="cat_nav" style="padding: 10px;">Services</li></a>
+                <a href="#"><li class="cat_nav" style="padding: 10px;">All</li></a>
+                <a href="/commodity"><li class="cat_nav" style="padding: 10px;">Commodities</li></a>
+                <a href="/electronic"><li class="cat_nav" style="padding: 10px;">Electronics</li></a>
+                <a href="/services"><li class="cat_nav" style="padding: 10px;">Services</li></a>
             </div>
             <div class="sub_class_menu" style="align-self: center; justify-self:right;">
                 <input type="search" placeholder="search category">
@@ -99,7 +110,7 @@
                 <div class="background_details">
                     <h3>Get an Item near you</h3>
                     <h1>Enter Mami market online</h1>
-                    <div>Shop Now</div>
+                    <a href="/admin/login"><input type="button" value="See More"></a>
                 </div>
 
             </div>
@@ -115,7 +126,7 @@
                     </div>
                 </div>
                 
-                <div class="post_block3">
+                <div class="post_block3" style="margin-top: 0;">
                     <div class="post_content_wrap">
                         <div class="cat_names"><h2>Commodities</h2></div>
                         <div class="post_wrap">
@@ -123,11 +134,12 @@
                     
                                 <% if (post_data.category.name === 'commodity' ) { %>
                                
-                                   <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>'); background-position: center; background-size:cover; width: 100%; height: 100px; ">
+                                   <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>');">
            
                                        <div class="admin_post_des">    
                                            <h4 class="post_title"><%= post_data.title%></h4>
                                            <p><%= post_data.richDescription %></p>
+                                           <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
                                        </div>
                
                                    </div>
@@ -147,11 +159,12 @@
                     
                                 <% if (post_data.category.name === 'Services' ) { %>
                                
-                                   <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>'); background-position: center; background-size:cover; width: 100%; height: 100px; ">
+                                   <div id="post_content" style="background-image: url('/public/images/<%= post_data.image %>');">
            
                                        <div class="admin_post_des">    
                                            <h4 class="post_title"><%= post_data.title%></h4>
                                            <p><%= post_data.richDescription %></p>
+                                           <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
                                        </div>
                
                                    </div>
@@ -176,6 +189,7 @@
                                        <div class="admin_post_des">    
                                            <h4 class="post_title"><%= post_data.title%></h4>
                                            <p><%= post_data.richDescription %></p>
+                                           <a href="/all-post/view-added/?id=<%= post_data._id %>"><input type="button" value="See More"></a>
                                        </div>
                
                                    </div>
@@ -196,6 +210,7 @@
                         <div class="trend_carrier" style="display: grid; grid-template-columns: 1fr 1fr;">
                             <div class="trends_image_post" style="background-image: url('/public/images/<%= post_trends.image %>');">
                                 <p><b><%= post_trends.title %></b></p>
+                                <a href="/all-post/view-added/?id=<%= post_trends._id %>"><input type="button" value="See More"></a>
                             </div>
                             <div class="admin_post_info">
                                 <p><%= post_trends.richDescription %></p>
@@ -227,9 +242,14 @@
                 <p class="Us">Contact Us:  070367442231</p>
             </div>
         </footer>
+
     </section>
+
+    <script src="/public/scripts/cdn.jsdelivr.net_npm_swiper@10.1.0_swiper-bundle.min.js"></script>
     <script src="/public/scripts/more.js"></script>
     <script src="script/home.js"></script>
     <script src="/public/scripts/home_script.js"></script>
+    <script src="/public/scripts/more.js"></script>
+    <script src="/public/scripts/home_harm.js"></script>
 </body>
 </html>

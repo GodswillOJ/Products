@@ -85,6 +85,11 @@ const userSchema = mongoose.Schema({
     details: { type: String, required: true},
     image: { type: String, required: true},
     state: { type: String },
+    orders:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Order',
+      required: true
+    }],
     created: {
       type: Date,
       required: true,

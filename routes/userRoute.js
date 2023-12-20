@@ -86,7 +86,7 @@ user_route.get('/user/login', userController.loadLogin)
 user_route.post('/user/login', userController.verifyLogin)
 
 //user home
-user_route.get('/user/home', userController.loadHome, authMiddleware.isLogout) 
+user_route.get('/user/home', authMiddleware.isLogin, userController.loadHome) 
 
 // user account
 user_route.get('/user/account', authMiddleware.isLogin, userController.userProfile)
@@ -135,6 +135,9 @@ user_route.get('/user/ordered', authMiddleware.isLogin, userController.orderLoad
 user_route.post('/user/ordered', authMiddleware.isLogin, userController.orderItem)
 
 user_route.get('/user/all_orders', authMiddleware.isLogin, userController.all_orders)
+
+user_route.get('/user/inbox', authMiddleware.isLogin, userController.messageFetch)
+user_route.get('/mark-as-read', authMiddleware.isLogin, userController.MarkAsRead)
 
 // user logout
 //logout

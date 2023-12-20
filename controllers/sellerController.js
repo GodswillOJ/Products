@@ -312,7 +312,7 @@ const verifyLogin = async(req, res)=>{
 // }
 
 // dashboard
-
+const {Order} = require('../models/orderSchema')
 const loadDashboard = async (req, res) => {
     let perPage = 12;
     let page = req.query.page || 1;
@@ -327,7 +327,10 @@ const loadDashboard = async (req, res) => {
         .limit(perPage)
         .exec();
     const count = await User.count();
-
+    const orderItem = req.params.orderItem
+    console.log(orderItem)
+    const order_info = await Order.find().populate({path:'orderItem'})
+    console.log(order_info)
     if (data.is_admin === 1 || data.is_admin === 2) {
         res.redirect('/seller/login')
         console.log('no users')
@@ -336,6 +339,7 @@ const loadDashboard = async (req, res) => {
         res.render('seller/dashboard', {
             locals,
             data,
+            order_info,
             current: page,
             pages: Math.ceil(count / perPage)
         })
@@ -509,7 +513,29 @@ const deleteUser = async(req, res)=>{
     try {
         const id = req.params.id;
         await User.deleteOne({ _id: id })
-        res.redirect('/seller/dashboard')
+        res.redirect('/admin/dashboard')
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+// remove_post
+const removePost = async(req, res)=>{
+    try {
+        await Post.deleteOne({author: req.session.user_id})
+        res.redirect('/seller/all-post')
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+// del_post
+const deletePost = async(req, res)=>{
+    try {
+        await Post.deleteMany({})
+        res.redirect('/seller/all-post')
 
     } catch (error) {
         console.log(error.message)
@@ -517,21 +543,19 @@ const deleteUser = async(req, res)=>{
 }
 
 
-
-
-
 // Admin Post
 
 const {Category} = require('../models/category');
 
-const { request } = require('../routes/adminRoute');
+// const { request } = require('../routes/adminRoute');
 const Post = require('../models/postSchema')
 
 const loadPost = async(req, res)=> {
     try {
-        const user = await User.findOne({_id: req.session.user_id})
+        const user = await User.findById({_id: req.session.user_id})
         const categories = await Category.find()
         const data = await Post.findOne({ 'author': req.session.user_id })
+        console.log(user)
         res.render('seller/add-post', {
             categories,
             data,
@@ -729,12 +753,37 @@ const insertInformation = async(req, res)=>{
     }
 }
 
+const viewOrderInfo = async(req, res) => {
+    try {
+        const order = await Order.findById({_id: req.params.id}).populate(path='orderItem')
+        
+        const user = await User.findOne({ _id: req.session.user_id })
+
+        if (order.status === 'pending') {
+            // Update the order status to "processed"
+            order.status = 'processed';
+
+            // Save the updated order
+            await order.save();
+        } else {
+            res.status(400).json({ error: 'Order is not in pending status.' });
+        }
+
+        res.render('seller/orders', {
+            data: order,
+            user
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 // category
 // 
 module.exports = {
     LoadRegister,
+    viewOrderInfo,
     insertAdmin,
     informationLoad,
     insertInformation,
@@ -755,6 +804,8 @@ module.exports = {
     editAdminProfile,
     saved,
     deleteUser,
+    deletePost,
+    removePost,
     loadPost,
     insertPost,
     loadHomePost,

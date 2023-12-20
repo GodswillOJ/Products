@@ -90,23 +90,25 @@
                                     </tr>
                                   </thead>
                                 <tbody>
-                            <% for(let i = 0; i < details.items.length ; i++) 
-                            { let item = details.items[i] %>
-                              <tr>
-                                    <th scope="row"><%= i %></th>
-                                    <td><%= item.name %></td>
-                                    <td><%= item.price %></td>
-                                    <td><%= item.quantity %></td>
-                                    <td>
-                                        <p style="color: rgb(23, 154, 23)"><%= user_order.status %></p>
-                                    </td>
-                              </tr>
-                              <% } %>
+                                    <% if (user_order) { %>
+                                       <% user_order.forEach(order => { %>
+                                        <% for(let i = 0; i < order.orderDetails.items.length ; i++) { let item = order.orderDetails.items[i] %>
+                                        
+                                            <tr>
+                                                <th scope="row"><%= i %></th>
+                                                <td><%= item.name %></td>
+                                                <td><%= item.price %></td>
+                                                <td><%= item.quantity %></td>
+                                                <td>
+                                                    <p style="color: rgb(23, 154, 23)"><%= order.status %></p>
+                                                </td>
+                                          </tr>
+                                      <% } %>
+                                       <% }) %>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
-                
-                
                  
             </div>
             

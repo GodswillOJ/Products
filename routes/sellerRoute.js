@@ -133,8 +133,8 @@ seller.get('/seller/post', sellerAuth.isAdminLogin, adminController.loadPost)
 seller.post('/seller/post', upload.single('image'), adminController.insertPost)
 
 seller.get('/seller/all-post/', sellerAuth.isAdminLogin, adminController.loadAllPost)
-// seller.post('/seller/remove-post', sellerAuth.isAdminLogin, adminController.clearPost)
-// seller.post('/seller/delete-post/', sellerAuth.isAdminLogin, adminController.deletePost)
+seller.post('/seller/remove-post', sellerAuth.isAdminLogin, adminController.removePost)
+seller.post('/seller/delete-post/', sellerAuth.isAdminLogin, adminController.deletePost)
 
 seller.get('/all-post/view-added/', adminController.viewAdded)
 
@@ -145,7 +145,7 @@ seller.get('/seller/customer', adminController.customerProfile)
 seller.get('/seller/information', adminController.informationLoad)
 seller.post('/seller/information', adminController.insertInformation)
 
-
+seller.get('/seller/order_id/:id', sellerAuth.isAdminLogin, adminController.viewOrderInfo)
 
 
 module.exports = seller;
